@@ -1,0 +1,82 @@
+# Rails
+*.rbc
+capybara-*.html
+.rspec
+/log/*
+!/log/.keep
+/tmp/*
+!/tmp/.keep
+/db/*.sqlite3
+/db/*.sqlite3-journal
+/db/*.sqlite3-wal
+/public/system
+/coverage/
+/spec/tmp
+*.orig
+rerun.txt
+pickle-email-*.html
+/storage/*
+!/storage/.keep
+
+# Bundler
+/.bundle
+/vendor/bundle
+
+# Ruby LSP
+.ruby-lsp
+
+# IDE and editors
+.vscode/*
+!.vscode/settings.json
+!.vscode/keybindings.json
+!.vscode/extensions.json
+.idea/
+.DS_Store
+*.swp
+*.swo
+*~
+.project
+.classpath
+.c9/
+*.launch
+.settingsSyncIgnore
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Node (if using esbuild or other JS bundlers)
+node_modules/
+yarn-error.log
+.yarn-integrity
+
+# Misc
+*.log
+.cache/
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Debug and profiling
+.byebug_history
+.pry_history
+profile
+
+# Spring
+/spring.pid
+spring-*.json
+
+# RuboCop cache
+.rubocop-http-cache
+
+# Keep placeholder files
+!/log/.keep
+!/tmp/.keep
+!/storage/.keep

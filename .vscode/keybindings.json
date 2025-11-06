@@ -1,0 +1,30 @@
+[
+  {
+    "key": "ctrl+shift+t",
+    "command": "workbench.action.terminal.focus"
+  },
+  {
+    "key": "ctrl+shift+t",
+    "command": "workbench.action.terminal.sendSequence",
+    "args": {
+      "text": "bundle exec rspec\u000D"
+    },
+    "when": "terminalFocus"
+  },
+  {
+    "key": "ctrl+shift+r",
+    "command": "workbench.action.terminal.sendSequence",
+    "args": {
+      "text": "bundle exec rspec ${relativeFile}\u000D"
+    },
+    "when": "editorTextFocus && resourceLangId == ruby"
+  },
+  {
+    "key": "ctrl+shift+d",
+    "command": "workbench.action.terminal.sendSequence",
+    "args": {
+      "text": "bundle exec rspec ${relativeFile} --format documentation\u000D"
+    },
+    "when": "editorTextFocus && resourceLangId == ruby"
+  }
+]
