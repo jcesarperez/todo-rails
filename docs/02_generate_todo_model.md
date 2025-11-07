@@ -46,9 +46,26 @@ RSpec.describe Todo, type: :model do
       todo = Todo.new(title: "Learn Rails")
       expect(todo.completed).to be(false)
     end
+
+    it 'has timestamps' do
+      todo = Todo.create!(title: "Learn Rails")
+      expect(todo.id).not_to be_nil
+      expect(todo.created_at).not_to be_nil
+      expect(todo.updated_at).not_to be_nil
+    end
+
+    it 'created_at and updated_at are initially the same' do
+      todo = Todo.create!(title: "Learn Rails")
+      expect(todo.created_at).to eq(todo.updated_at)
+    end
   end
 end
 ```
+
+**What changed:**
+- Added test for `id` - Should exist after saving to database
+- Added test for `created_at` and `updated_at` - Should be set automatically
+- Added test that both timestamps are initially the same
 
 Run the test to see it fail:
 
@@ -149,14 +166,50 @@ Todo
   attributes
     has a title
     has completed status that defaults to false
+    has timestamps
+    created_at and updated_at are initially the same
 
 Finished in 0.1234 seconds (files took 0.5678 seconds to load)
-3 examples, 0 failures
+5 examples, 0 failures
 ```
 
 Great! All tests pass. ✓ This is the **Green** phase.
 
-## Step 4: Refactor (Optional)
+## Step 4: Install Annotate Models (Optional but Recommended)
+
+The `annotate_models` gem automatically adds schema comments to your models, making it clear what attributes each model has:
+
+```bash
+bundle add annotate --group development
+```
+
+Generate annotations:
+
+```bash
+rails generate annotate:install
+bundle exec annotate
+```
+
+This will update `app/models/todo.rb` to look like this:
+
+```ruby
+# == Schema Information
+# Table name: todos
+#
+#  id        :bigint      primary key
+#  title     :string
+#  completed :boolean     default(false)
+#  created_at :datetime
+#  updated_at :datetime
+
+class Todo < ApplicationRecord
+  validates :title, presence: true
+end
+```
+
+Now it's clear what attributes the model has just by looking at the code!
+
+## Step 5: Refactor (Optional)
 
 Our code is already simple, so there's not much to refactor. But let's review:
 
@@ -181,6 +234,7 @@ All should pass ✓
 - Maps to a database table (`todos`)
 - Contains business logic and validations
 - Validators like `validates :title, presence: true` ensure data integrity
+- Schema annotations document what attributes it has
 
 **Migration**: Defines database schema
 - Creates/modifies tables
@@ -199,22 +253,31 @@ All should pass ✓
 - Makes assertions more natural and readable
 - Works seamlessly with RSpec
 
+**Annotate Models**: Automatically documents model attributes
+- Adds schema information as comments to models
+- Makes it immediately clear what attributes exist
+- Updates when migrations change
+
 ## 🎯 Completion Checklist
 
-- [ ] Created `spec/models/todo_spec.rb`
-- [ ] Generated Todo model with `rails generate model`
+- [ ] Created `spec/models/todo_spec.rb` with all attribute tests
+- [ ] Generated Todo model with `rails generate model` and `--skip-test`
+- [ ] Updated migration with `default: false`
 - [ ] Ran `rails db:create` and `rails db:migrate`
 - [ ] Added `:presence` validation to title
-- [ ] All tests passing (3 examples, 0 failures)
+- [ ] Installed and ran `annotate_models`
+- [ ] All tests passing (5 examples, 0 failures)
 - [ ] Verified tests run in VS Code with Better RSpec
 
 ## 📝 What You've Learned
 
 - How to write specs before code (Red phase)
-- How to generate Rails models
+- How to generate Rails models with `--skip-test`
 - How to create and run database migrations
+- How to set default values in migrations
 - How to add validations to models
 - How to make failing tests pass (Green phase)
+- How to document models with annotate_models
 - The TDD cycle in action
 
 ## 🚀 Next Lesson

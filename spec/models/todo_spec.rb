@@ -1,3 +1,13 @@
+# == Schema Information
+#
+# Table name: todos
+#
+#  id         :integer          not null, primary key
+#  completed  :boolean          default(FALSE)
+#  title      :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
 require "rails_helper"
 
 RSpec.describe Todo, type: :model do
@@ -14,6 +24,18 @@ RSpec.describe Todo, type: :model do
     it "has completed status that defaults to false" do
       todo = Todo.new(title: "Learn Rails")
       expect(todo.completed).to be(false)
+    end
+
+    it "has timestamps" do
+      todo = Todo.create!(title: "Learn Rails")
+      expect(todo.id).not_to be_nil
+      expect(todo.created_at).not_to be_nil
+      expect(todo.updated_at).not_to be_nil
+    end
+
+    it "created_at and updated_at are initially the same" do
+      todo = Todo.create!(title: "Learn Rails")
+      expect(todo.created_at).to eq(todo.updated_at)
     end
   end
 end
