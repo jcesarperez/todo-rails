@@ -7,5 +7,6 @@
   },
   "rubyLsp.enableBundlerMetadataCache": true,
   "rubyLsp.formatter": "standard",
-  "rubyLsp.testExplorer": false
+  "rubyLsp.testExplorer": false,
+  "rubyLsp.enableTestLogs": false
 }
