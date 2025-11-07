@@ -51,16 +51,16 @@ bundle exec rspec --version
 
 The project includes a `.vscode/` folder with:
 - `settings.json` - Ruby LSP and formatting configuration
-- `keybindings.json` - Test execution keyboard shortcuts
 - `extensions.json` - Recommended extensions
 
 VS Code will suggest installing the recommended extensions when you open the project.
 
-## ⌨️ Keyboard Shortcuts (Once Configured)
+## ⌨️ Running Tests in VS Code
 
-- `Ctrl+Shift+T`: Run all tests
-- `Ctrl+Shift+R`: Run current spec file
-- `Ctrl+Shift+D`: Run current spec file with detailed output
+Use the **Better RSpec** extension to run tests:
+- Click the **play icon** next to individual tests in the editor
+- Click the **play icon** in the sidebar (Better RSpec panel) to run test files or all tests
+- Tests execute directly in VS Code without needing the terminal
 
 ## 📁 Project Structure
 
@@ -109,4 +109,10 @@ todo-rails/
 
 ## 📖 Next Steps
 
-Start with **[01_TUTORIAL.md](./doc/01_TUTORIAL.md)** - Lesson 1: Environment Setup
+Start with **[TUTORIAL.md](./TUTORIAL.md)** - Lesson 1: Environment Setup
+
+---
+
+**Created**: November 2025
+**Goal**: Learn Ruby on Rails with TDD
+**Level**: Beginner

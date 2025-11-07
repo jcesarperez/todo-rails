@@ -153,11 +153,9 @@ bundle exec standard --version
 1. Open VS Code Extensions marketplace (`Ctrl+Shift+X` / `Cmd+Shift+X`)
 2. Install each extension:
    - `Shopify.ruby-lsp` - Ruby Language Server
-   - `Shopify.ruby-sorbet` - Type checking (optional)
    - `betterlandmark.rails` - Rails helpers
    - `karunamurti.rspec` - RSpec snippets
    - `solutionrovers.better-rspec` - RSpec test runner
-   - `hbenl.test-explorer-ui` - Visual test explorer
    - `eamodio.gitlens` - Git integration
    - `esbenp.prettier-vscode` - Code formatter
 
@@ -213,10 +211,12 @@ end
 Run the test:
 
 ```bash
-# Run the smoke test
+# Run the smoke test from terminal
 bundle exec rspec spec/models/smoke_test_spec.rb
 
-# Or use the keyboard shortcut: Ctrl+Shift+R (with cursor in the file)
+# Or use Better RSpec in VS Code:
+# 1. Open the spec file in the editor
+# 2. Click the play icon next to "Smoke Test" or in the Better RSpec sidebar
 ```
 
 Expected output:
@@ -264,3 +264,8 @@ rm spec/models/smoke_test_spec.rb
 
 Proceed to **Lesson 2: Generate Todo Model** to start building the TODO list application.
 
+---
+
+**Lesson Status**: ✅ Complete
+**Time Estimate**: 30-45 minutes
+**Difficulty**: Beginner
