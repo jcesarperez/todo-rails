@@ -65,38 +65,42 @@ This is expected! We haven't created the model yet. ✓ This is the **Red** phas
 
 ## Step 2: Generate the Todo Model (Green Phase)
 
-Now we generate the model to make the tests pass:
+Now we generate the model to make the tests pass. **Important**: Use `--skip-test` because we already wrote our own spec and don't want Rails to overwrite it:
 
 ```bash
-rails generate model Todo title:string completed:boolean
+rails generate model Todo title:string completed:boolean --skip-test
 ```
 
 This command:
 - Creates `app/models/todo.rb`
 - Creates a migration file `db/migrate/[timestamp]_create_todos.rb`
-- Creates the model spec (which we already have)
+- **Does NOT** overwrite our existing spec (because of `--skip-test`)
 
-Let's look at what was generated in `app/models/todo.rb`:
+**Why `--skip-test`?**
+- We already wrote `spec/models/todo_spec.rb` with real tests
+- Rails would generate an empty placeholder spec if we didn't use this flag
+- We want to keep our TDD tests, not replace them
 
-```ruby
-class Todo < ApplicationRecord
-end
-```
+### Update the Migration with Default Value
 
-And the migration in `db/migrate/[timestamp]_create_todos.rb`:
+The generated migration needs to set a default value for `completed`. Open the migration file `db/migrate/[timestamp]_create_todos.rb` and modify it:
 
 ```ruby
 class CreateTodos < ActiveRecord::Migration[7.1]
   def change
     create_table :todos do |t|
       t.string :title
-      t.boolean :completed
+      t.boolean :completed, default: false
 
       t.timestamps
     end
   end
 end
 ```
+
+**Why `default: false`?**
+- Our test expects `completed` to default to `false`, not `nil`
+- This is set at the database level, so all new todos automatically have this value
 
 Now create the test database and run migrations:
 
@@ -176,16 +180,24 @@ All should pass ✓
 - Inherits from `ApplicationRecord`
 - Maps to a database table (`todos`)
 - Contains business logic and validations
+- Validators like `validates :title, presence: true` ensure data integrity
 
 **Migration**: Defines database schema
 - Creates/modifies tables
 - Is version controlled (can undo with `rails db:rollback`)
 - Runs in order
+- `default: false` sets default values at the database level
 
 **Spec**: Tests the model behavior
 - Uses RSpec syntax (describe, it, expect)
+- Uses Shoulda Matchers for elegant assertions (`validate_presence_of`)
 - Tests validations
-- Tests attributes
+- Tests attributes and defaults
+
+**Shoulda Matchers**: Provides readable matchers for Rails testing
+- `validate_presence_of(:title)` - Tests presence validation
+- Makes assertions more natural and readable
+- Works seamlessly with RSpec
 
 ## 🎯 Completion Checklist
 

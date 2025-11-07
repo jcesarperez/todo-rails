@@ -109,6 +109,9 @@ bundle install
 # Add RSpec Rails gem to development and test groups
 bundle add rspec-rails --group development, test
 
+# Add Shoulda Matchers for advanced assertions
+bundle add shoulda-matchers --group development, test
+
 # Generate RSpec configuration
 rails generate rspec:install
 
@@ -117,6 +120,21 @@ rails generate rspec:install
 # - spec/rails_helper.rb
 # - .rspec configuration file
 ```
+
+## Step 5b: Configure Shoulda Matchers
+
+Open `spec/rails_helper.rb` and add this at the **end of the file** (after the `RSpec.configure` block):
+
+```ruby
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    with.test_framework :rspec
+    with.library :rails
+  end
+end
+```
+
+This enables matchers like `validate_presence_of` that we'll use in tests.
 
 ## Step 6: Install Code Quality Tools
 
