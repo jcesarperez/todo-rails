@@ -64,7 +64,8 @@ Every lesson follows this cycle:
 - **Run tests frequently** - `bundle exec rspec` after each change
 - **Read error messages** - They guide you to the solution
 - **Keep tests simple** - One assertion per test when possible
-- **Use Better RSpec** - Click play icon to run tests in VS Code
+- **Use Better RSpec** - Click play icon in sidebar to run tests
+- **Ignore Ruby LSP errors** - If you see test errors from Ruby LSP, they're normal. Better RSpec handles the testing.
 
 ## 📖 Prerequisites
 
@@ -91,6 +92,11 @@ Every lesson follows this cycle:
 **Better RSpec not showing?**
 - Reload VS Code: `Ctrl+Shift+P` → "Developer: Reload Window"
 - Check extensions are installed
+
+**Seeing errors in Test Results from Ruby LSP?**
+- This is normal. We use Better RSpec for testing.
+- Ignore these errors and use Better RSpec's sidebar instead.
+- Ensure `rubyLsp.testExplorer: false` and `rubyLsp.enableTestLogs: false` in settings.json
 
 **Database errors?**
 - Reset database: `rails db:drop db:create db:migrate`

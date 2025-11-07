@@ -109,6 +109,9 @@ bundle install
 # Add RSpec Rails gem to development and test groups
 bundle add rspec-rails --group development, test
 
+# Add Shoulda Matchers for advanced assertions
+bundle add shoulda-matchers --group development, test
+
 # Generate RSpec configuration
 rails generate rspec:install
 
@@ -117,6 +120,21 @@ rails generate rspec:install
 # - spec/rails_helper.rb
 # - .rspec configuration file
 ```
+
+## Step 5b: Configure Shoulda Matchers
+
+Open `spec/rails_helper.rb` and add this at the **end of the file** (after the `RSpec.configure` block):
+
+```ruby
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    with.test_framework :rspec
+    with.library :rails
+  end
+end
+```
+
+This enables matchers like `validate_presence_of` that we'll use in tests.
 
 ## Step 6: Install Code Quality Tools
 
@@ -130,25 +148,28 @@ bundle exec standard --version
 
 ## Step 7: Configure VS Code
 
-### Option A: Automatic (Recommended)
+### VS Code Settings Configuration
 
-1. Open the project in VS Code
-2. You'll see a notification suggesting recommended extensions
-3. Click "Install All" to install all extensions at once
-4. Settings are automatically applied
+The project includes pre-configured settings. If you need to adjust them, open `.vscode/settings.json` and use:
 
-### Option B: Manual
+```json
+{
+  "[ruby]": {
+    "editor.defaultFormatter": "Shopify.ruby-lsp",
+    "editor.formatOnSave": true,
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2
+  },
+  "rubyLsp.enableBundlerMetadataCache": true,
+  "rubyLsp.formatter": "standard",
+  "rubyLsp.testExplorer": false,
+  "rubyLsp.enableTestLogs": false
+}
+```
 
-1. Open VS Code Extensions marketplace (`Ctrl+Shift+X` / `Cmd+Shift+X`)
-2. Install each extension:
-   - `Shopify.ruby-lsp` - Ruby Language Server
-   - `betterlandmark.rails` - Rails helpers
-   - `karunamurti.rspec` - RSpec snippets
-   - `solutionrovers.better-rspec` - RSpec test runner
-   - `eamodio.gitlens` - Git integration
-   - `esbenp.prettier-vscode` - Code formatter
-
-3. The project includes pre-configured settings in `.vscode/` folder that will be applied automatically
+**Key settings:**
+- `rubyLsp.testExplorer: false` - Disables Ruby LSP's test explorer (we use Better RSpec)
+- `rubyLsp.enableTestLogs: false` - Prevents test error logs from Ruby LSP
 
 ## Step 8: Initialize Git Repository
 
@@ -205,7 +226,8 @@ bundle exec rspec spec/models/smoke_test_spec.rb
 
 # Or use Better RSpec in VS Code:
 # 1. Open the spec file in the editor
-# 2. Click the play icon next to "Smoke Test" or in the Better RSpec sidebar
+# 2. Look for "Better RSpec" panel in the left sidebar
+# 3. Click the play icon next to "Smoke Test"
 ```
 
 Expected output:
@@ -219,6 +241,8 @@ Finished in 0.1234 seconds (files took 0.5678 seconds to load)
 ```
 
 If you see "1 example, 0 failures" - congratulations! ✅
+
+**Note**: You might see error messages from Ruby LSP in the Test Results panel. This is normal and can be ignored. We use Better RSpec for testing, not Ruby LSP.
 
 ### Step 10: Cleanup
 
