@@ -3,15 +3,9 @@
     "editor.defaultFormatter": "Shopify.ruby-lsp",
     "editor.formatOnSave": true,
     "editor.insertSpaces": true,
-    "editor.tabSize": 2,
-    "editor.codeActionsOnSave": {
-      "source.fixAll": "explicit"
-    }
+    "editor.tabSize": 2
   },
   "rubyLsp.enableBundlerMetadataCache": true,
   "rubyLsp.formatter": "standard",
-  "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": true
-  }
+  "rubyLsp.testExplorer": false
 }

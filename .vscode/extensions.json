@@ -1,11 +1,9 @@
 {
   "recommendations": [
     "Shopify.ruby-lsp",
-    "Shopify.ruby-sorbet",
     "betterlandmark.rails",
     "karunamurti.rspec",
     "solutionrovers.better-rspec",
-    "hbenl.test-explorer-ui",
     "eamodio.gitlens",
     "esbenp.prettier-vscode"
   ]
