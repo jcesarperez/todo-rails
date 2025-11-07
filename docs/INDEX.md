@@ -16,7 +16,7 @@ Complete step-by-step guide to building a TODO list application with Ruby on Rai
   - Run migrations
 
 ### CRUD Operations
-- **[Lesson 3: Create Todos](./03_create_todos.md)** (coming soon)
+- **[Lesson 3: Create Todos](./03_create_todos.md)** ✅
   - Test creating todos
   - Persist to database
 
