@@ -84,6 +84,18 @@ RSpec.describe Todo, type: :model do
       result = todo.save
       expect(result).to be(true)
     end
+
+    it 'populates errors.full_messages when validation fails' do
+      todo = Todo.new(title: "")
+      todo.save
+      expect(todo.errors.full_messages).to include("Title can't be blank")
+    end
+
+    it 'has empty errors when validation succeeds' do
+      todo = Todo.new(title: "Valid title")
+      todo.save
+      expect(todo.errors.full_messages).to be_empty
+    end
   end
 end
 ```
@@ -110,9 +122,11 @@ Todo
     creates a todo in memory and saves it
     returns false when save fails
     returns true when save succeeds
+    populates errors.full_messages when validation fails
+    has empty errors when validation succeeds
 
 Finished in 0.1234 seconds (files took 0.5678 seconds to load)
-9 examples, 0 failures
+11 examples, 0 failures
 ```
 
 Wait - they all pass! This is because Rails ActiveRecord provides `.create`, `.create!`, `.new`, and `.save` automatically. ✓ This is the **Green** phase already.
@@ -204,20 +218,23 @@ Todo
     creates a todo in memory and saves it
     returns false when save fails
     returns true when save succeeds
+    populates errors.full_messages when validation fails
+    has empty errors when validation succeeds
 
 Finished in 0.1234 seconds (files took 0.5678 seconds to load)
-14 examples, 0 failures
+16 examples, 0 failures
 ```
 
-Perfect! All 14 tests pass. ✓
+Perfect! All 16 tests pass. ✓
 
 ## 🎯 Completion Checklist
 
 - [ ] Created `spec/models/todo_creation_spec.rb`
-- [ ] All tests for `.create` passing
-- [ ] All tests for `.create!` passing
-- [ ] All tests for `.new` and `.save` passing
-- [ ] Ran all model tests (14 examples, 0 failures)
+- [ ] All tests for `.create` passing (4 tests)
+- [ ] All tests for `.create!` passing (2 tests)
+- [ ] All tests for `.new` and `.save` passing (5 tests)
+- [ ] Tests for `errors.full_messages` passing
+- [ ] Ran all model tests (16 examples, 0 failures)
 - [ ] Experimented in Rails console
 - [ ] Verified tests run in VS Code with Better RSpec
 
@@ -228,6 +245,8 @@ Perfect! All 14 tests pass. ✓
 - What `.persisted?` means
 - How validations affect persistence
 - How to test for raised exceptions
+- How to test error messages with `errors.full_messages`
+- How to verify errors are empty on success
 - Rails ActiveRecord provides these methods automatically
 - How to use Rails console for experimentation
 

@@ -59,5 +59,17 @@ RSpec.describe Todo, type: :model do
       result = todo.save
       expect(result).to be(true)
     end
+
+    it "populates errors.full_messages when validation fails" do
+      todo = Todo.new(title: "")
+      todo.save
+      expect(todo.errors.full_messages).to include("Title can't be blank")
+    end
+
+    it "has empty errors when validation succeeds" do
+      todo = Todo.new(title: "Valid title")
+      todo.save
+      expect(todo.errors.full_messages).to be_empty
+    end
   end
 end
