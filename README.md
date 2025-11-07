@@ -17,12 +17,13 @@ Build a complete TODO list web application, writing tests first using TDD method
 
 ## 📚 How to Use This Project
 
-1. Follow the **[TUTORIAL.md](./TUTORIAL.md)** file for step-by-step lessons
-2. Each lesson includes:
+1. Follow the **[docs/INDEX.md](./docs/INDEX.md)** file for all lessons
+2. Each lesson is a separate file in the `docs/` folder
+3. Each lesson includes:
    - TDD cycle (Red → Green → Refactor)
    - Code examples
    - Test-first approach
-3. Complete the setup checklist below before starting
+4. Complete the setup checklist below before starting
 
 ## ✅ Quick Start
 
@@ -95,7 +96,12 @@ todo-rails/
 ├── Gemfile.lock          # Locked gem versions
 ├── Rakefile              # Rails tasks
 ├── README.md
-├── TUTORIAL.md           # Step-by-step lessons
+├── docs/                 # Tutorial lessons (each lesson is a separate file)
+│   ├── INDEX.md          # Tutorial index and navigation
+│   ├── 01_environment_setup.md
+│   ├── 02_generate_todo_model.md
+│   ├── 03_create_todos.md
+│   └── ...
 └── .gitignore
 ```
 

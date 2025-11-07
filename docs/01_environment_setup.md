@@ -1,19 +1,8 @@
-# Todo Rails - Tutorial: Test-Driven Development
-
-A comprehensive guide to building a TODO list application using TDD methodology with Ruby on Rails.
-
-## 📚 Table of Contents
-
-- [Lesson 1: Environment Setup](#lesson-1-environment-setup)
-- [Lesson 2: Generate Todo Model](#lesson-2-generate-todo-model) (coming soon)
-
----
-
-## Lesson 1: Environment Setup
+# Lesson 1: Environment Setup
 
 **Objective**: Set up a complete Ruby on Rails development environment with all tools configured for TDD.
 
-### Rails Project Structure
+## Rails Project Structure
 
 When you create a new Rails project, it generates this directory structure:
 
@@ -38,7 +27,7 @@ todo-rails/
 
 **Note**: We focus on the `spec/` directory for our TDD approach, not the default `test/` directory.
 
-### Prerequisites Checklist
+## Prerequisites Checklist
 
 Before starting, ensure you have:
 - [ ] Ruby version manager installed (`rbenv` or `asdf`)
@@ -46,7 +35,7 @@ Before starting, ensure you have:
 - [ ] VS Code installed
 - [ ] Access to a terminal (zsh or bash)
 
-### Step 1: Install Ruby 3.3.x
+## Step 1: Install Ruby 3.3.x
 
 ```bash
 # macOS (using Homebrew):
@@ -78,7 +67,7 @@ rbenv global 3.3.2
 ruby --version  # Should output: ruby 3.3.2 (...)
 ```
 
-### Step 2: Install Rails and Bundler
+## Step 2: Install Rails and Bundler
 
 ```bash
 # Update RubyGems
@@ -95,7 +84,7 @@ rails --version   # Should output: Rails 7.1.x
 ruby --version    # Should output: ruby 3.3.2
 ```
 
-### Step 3: Create a New Rails Project
+## Step 3: Create a New Rails Project
 
 ```bash
 # Create new project with SQLite database
@@ -105,7 +94,7 @@ rails new todo-rails --database=sqlite3 --skip-bundle
 cd todo-rails
 ```
 
-### Step 4: Install Project Dependencies
+## Step 4: Install Project Dependencies
 
 ```bash
 # Install gems from Gemfile
@@ -114,7 +103,7 @@ bundle install
 # This installs all required gems locally in the project
 ```
 
-### Step 5: Install and Configure RSpec
+## Step 5: Install and Configure RSpec
 
 ```bash
 # Add RSpec Rails gem to development and test groups
@@ -129,7 +118,7 @@ rails generate rspec:install
 # - .rspec configuration file
 ```
 
-### Step 6: Install Code Quality Tools
+## Step 6: Install Code Quality Tools
 
 ```bash
 # Install Standard (Ruby formatter and linter)
@@ -139,16 +128,16 @@ bundle add standard --group development
 bundle exec standard --version
 ```
 
-### Step 7: Configure VS Code
+## Step 7: Configure VS Code
 
-#### Option A: Automatic (Recommended)
+### Option A: Automatic (Recommended)
 
 1. Open the project in VS Code
 2. You'll see a notification suggesting recommended extensions
 3. Click "Install All" to install all extensions at once
-4. Settings and keybindings are automatically applied
+4. Settings are automatically applied
 
-#### Option B: Manual
+### Option B: Manual
 
 1. Open VS Code Extensions marketplace (`Ctrl+Shift+X` / `Cmd+Shift+X`)
 2. Install each extension:
@@ -161,7 +150,7 @@ bundle exec standard --version
 
 3. The project includes pre-configured settings in `.vscode/` folder that will be applied automatically
 
-### Step 8: Initialize Git Repository
+## Step 8: Initialize Git Repository
 
 ```bash
 # Initialize Git
@@ -178,7 +167,7 @@ git remote add origin <your-repo-url>
 git push -u origin main
 ```
 
-### Step 9: Verify Everything Works
+## Step 9: Verify Everything Works
 
 Run these commands to ensure your setup is complete:
 
@@ -262,7 +251,7 @@ rm spec/models/smoke_test_spec.rb
 
 ## 🚀 Next Lesson
 
-Proceed to **Lesson 2: Generate Todo Model** to start building the TODO list application.
+Proceed to **[Lesson 2: Generate Todo Model](./02_generate_todo_model.md)** to start building the TODO list application.
 
 ---
 
