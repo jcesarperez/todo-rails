@@ -28,7 +28,7 @@ Complete step-by-step guide to building a TODO list application with Ruby on Rai
   - Test updating todo attributes
   - Validate changes
 
-- **[Lesson 6: Delete Todos](./06_delete_todos.md)** (coming soon)
+- **[Lesson 6: Delete Todos](./06_delete_todos.md)** ✅
   - Test deleting todos
   - Handle edge cases
 
