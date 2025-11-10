@@ -32,9 +32,10 @@ Complete step-by-step guide to building a TODO list application with Ruby on Rai
   - Test deleting todos
   - Handle edge cases
 
-- **[Lesson 7: Mark as Completed](./07_mark_as_completed.md)** (coming soon)
-  - Test completion toggle
-  - Update status
+- **[Lesson 7: Mark as Completed](./07_mark_as_completed.md)** ✅
+  - Test completion status
+  - Custom completion methods
+  - Toggle functionality
 
 ### Controllers & Views
 - **[Lesson 8: Views and Controllers](./08_views_and_controllers.md)** (coming soon)
@@ -80,6 +81,7 @@ Every lesson follows this cycle:
 - Rails model, controller, and view architecture
 - RSpec testing framework
 - Database migrations and validations
+- Semantic method naming and custom business logic
 - RESTful API principles
 - Web development best practices
 
@@ -114,7 +116,28 @@ Every lesson follows this cycle:
 | 7. Completed | 15-20 min | Beginner |
 | 8. Views | 30-40 min | Intermediate |
 
-**Total**: ~4-5 hours for complete tutorial
+**Total**: ~4.5-5.5 hours for complete tutorial
+
+## 📊 Progress Overview
+
+```
+✅ Complete: Lessons 1-7 (Model layer fully tested)
+🔄 In Progress: Lesson 8 (HTTP layer and views)
+⏭️ Coming Soon: Lesson 9+ (Advanced features)
+```
+
+## 🏆 What You'll Have Built
+
+After completing this tutorial, you'll have:
+
+- ✅ Fully tested Todo model with validations
+- ✅ Complete CRUD operations (Create, Read, Update, Delete)
+- ✅ Semantic methods for domain logic (mark_complete, toggle_completion)
+- ✅ Database queries and filtering
+- ✅ HTTP endpoints and controllers
+- ✅ HTML views with forms and displays
+- ✅ Comprehensive test suite (100+ tests)
+- ✅ Professional Rails application following best practices
 
 ---
 
