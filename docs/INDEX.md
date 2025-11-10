@@ -24,7 +24,7 @@ Complete step-by-step guide to building a TODO list application with Ruby on Rai
   - Test fetching all todos
   - Query database
 
-- **[Lesson 5: Update Todos](./05_update_todos.md)** (coming soon)
+- **[Lesson 5: Update Todos](./05_update_todos.md)** ✅
   - Test updating todo attributes
   - Validate changes
 
