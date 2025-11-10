@@ -20,7 +20,7 @@ Complete step-by-step guide to building a TODO list application with Ruby on Rai
   - Test creating todos
   - Persist to database
 
-- **[Lesson 4: List Todos](./04_list_todos.md)** (coming soon)
+- **[Lesson 4: List Todos](./04_list_todos.md)** ✅
   - Test fetching all todos
   - Query database
 
