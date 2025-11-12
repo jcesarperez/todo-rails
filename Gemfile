@@ -29,3 +29,5 @@ group :test do
 end
 
 gem "annotate", "~> 3.2", group: :development
+
+gem "test", "~> 1.0", group: :development

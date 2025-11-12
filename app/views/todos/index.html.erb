@@ -1,0 +1,42 @@
+<div class="container">
+  <h1>Todos</h1>
+
+  <div class="todos-list">
+    <% if @todos.any? %>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @todos.each do |todo| %>
+            <tr>
+              <td><%= link_to todo.title, todo_path(todo) %></td>
+              <td>
+                <% if todo.completed? %>
+                  <span class="badge completed">✓ Completed</span>
+                <% else %>
+                  <span class="badge incomplete">○ Incomplete</span>
+                <% end %>
+              </td>
+              <td>
+                <%= link_to "Edit", edit_todo_path(todo), class: "btn btn-sm btn-primary" %>
+                <%= button_to "Delete", todo_path(todo), 
+                    method: :delete, 
+                    form: { data: { turbo_confirm: "Are you sure?" } },
+                    class: "btn btn-sm btn-danger" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p>No todos yet. <%= link_to "Create one!", new_todo_path %></p>
+    <% end %>
+  </div>
+
+  <%= link_to "New Todo", new_todo_path, class: "btn btn-primary" %>
+</div>
