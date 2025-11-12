@@ -29,6 +29,8 @@ REST (Representational State Transfer) is a convention for HTTP endpoints:
 
 Rails generates all this automatically with `resources :todos`.
 
+---
+
 ## Step 1: Generate the Controller with Tests
 
 ```bash
@@ -42,7 +44,55 @@ This creates:
 
 **Why `--skip-test`?** We'll write request specs in `spec/requests/` instead of Rails' default tests.
 
-## Step 4: Set Up Routes
+---
+
+## Step 2: Configure Turbo Rails (REQUIRED for Rails 7.1)
+
+For delete buttons with confirmation to work in Rails 7.1, you MUST configure Turbo first.
+
+### Step 2a: Create `app/javascript/application.js`
+
+Create the file with:
+
+```javascript
+import "@hotwired/turbo-rails"
+```
+
+### Step 2b: Create `config/importmap.rb`
+
+Create the file with:
+
+```ruby
+pin "application", preload: true
+pin "@hotwired/turbo-rails", to: "turbo.min.js"
+```
+
+### Step 2c: Create JavaScript controllers directory
+
+```bash
+mkdir -p app/javascript/controllers
+```
+
+### Step 2d: Verify `app/views/layouts/application.html.erb` has Turbo loaded
+
+Make sure your layout file has this in the `<head>` section:
+
+```erb
+<%= javascript_importmap_tags %>
+```
+
+### Step 2e: Bundle and restart
+
+```bash
+bundle install
+rails server  # Restart the server
+```
+
+**This is critical:** Without these files, Turbo won't work and delete confirmations won't function.
+
+---
+
+## Step 3: Set Up Routes
 
 Edit `config/routes.rb`:
 
@@ -55,7 +105,9 @@ end
 
 This creates all 7 RESTful routes and sets the homepage to `/todos`.
 
-## Step 5: Write Request Specs (Red Phase)
+---
+
+## Step 4: Write Request Specs (Red Phase)
 
 Create the request specs directory and file:
 
@@ -293,7 +345,9 @@ bundle exec rspec spec/requests/todos_spec.rb
 
 You should see many failures - this is expected! ✓ This is the **Red** phase.
 
-## Step 4: Implement the Controller (Green Phase)
+---
+
+## Step 5: Implement the Controller (Green Phase)
 
 Edit `app/controllers/todos_controller.rb`:
 
@@ -336,7 +390,7 @@ class TodosController < ApplicationController
 
   def destroy
     @todo.destroy
-    redirect_to todos_url, notice: "Todo was successfully destroyed.", status: :see_other
+    redirect_to todos_url, notice: "Todo was successfully destroyed."
   end
 
   private
@@ -377,45 +431,9 @@ bundle exec rspec spec/requests/todos_spec.rb
 
 Most should pass now! ✓ This is the **Green** phase.
 
-## Step 8: Configure Delete Buttons with Turbo Confirmation
+---
 
-Now that Turbo is configured, use `button_to` with `turbo_confirm`:
-
-### In `app/views/todos/index.html.erb`:
-
-```erb
-<%= button_to "Delete", todo_path(todo), 
-    method: :delete, 
-    form: { data: { turbo_confirm: "Are you sure?" } },
-    class: "btn btn-sm btn-danger" %>
-```
-
-### In `app/views/todos/show.html.erb`:
-
-```erb
-<%= button_to "Delete", todo_path(@todo), 
-    method: :delete, 
-    form: { data: { turbo_confirm: "Are you sure?" } },
-    class: "btn btn-danger" %>
-```
-
-**How it works:**
-
-1. `button_to` creates an invisible HTML form with `method="post"` and hidden `_method=delete`
-2. The `form: { data: { turbo_confirm: "..." } }` adds `data-turbo-confirm` to the form
-3. When you click Delete, Turbo intercepts the form submission
-4. Shows the browser confirmation dialog
-5. If confirmed, submits the DELETE request
-6. Controller destroys the record and redirects
-7. Page updates automatically with Turbo Drive
-
-**Important: Why `form: { data: { turbo_confirm: ... } }`?**
-
-- `button_to` generates a `<form>` element
-- We need `data-turbo-confirm` on the form, not the button
-- That's why we pass it via `form: { data: { ... } }`
-
-## Step 9: Create the Views
+## Step 6: Create the Views
 
 ### Create `app/views/todos/index.html.erb`:
 
@@ -569,9 +587,11 @@ Now that Turbo is configured, use `button_to` with `turbo_confirm`:
 </div>
 ```
 
-## Step 6: Create a Layout
+---
 
-Create `app/views/layouts/application.html.erb` (it should already exist, update the body):
+## Step 7: Create a Layout
+
+Update `app/views/layouts/application.html.erb`:
 
 ```erb
 <!DOCTYPE html>
@@ -589,11 +609,12 @@ Create `app/views/layouts/application.html.erb` (it should already exist, update
       .table { width: 100%; border-collapse: collapse; margin: 20px 0; }
       .table th, .table td { padding: 10px; text-align: left; border-bottom: 1px solid #ddd; }
       .table th { background-color: #f5f5f5; }
-      .btn { display: inline-block; padding: 8px 12px; margin: 5px; text-decoration: none; border-radius: 4px; }
+      .btn { display: inline-block; padding: 8px 12px; margin: 5px; text-decoration: none; border-radius: 4px; cursor: pointer; border: none; }
       .btn-primary { background-color: #007bff; color: white; }
       .btn-secondary { background-color: #6c757d; color: white; }
       .btn-danger { background-color: #dc3545; color: white; }
       .btn:hover { opacity: 0.8; }
+      .btn-sm { padding: 4px 8px; font-size: 12px; }
       .badge { padding: 4px 8px; border-radius: 3px; font-size: 12px; }
       .badge.completed { background-color: #28a745; color: white; }
       .badge.incomplete { background-color: #ffc107; color: black; }
@@ -603,6 +624,11 @@ Create `app/views/layouts/application.html.erb` (it should already exist, update
       .alert { padding: 15px; margin: 15px 0; border-radius: 4px; }
       .alert-danger { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
       .flash { margin: 15px 0; padding: 15px; background-color: #d4edda; color: #155724; border-radius: 4px; }
+      .actions { margin: 20px 0; }
+      .todo-details { margin: 20px 0; padding: 15px; background-color: #f9f9f9; border-radius: 4px; }
+      .todos-list { margin: 20px 0; }
+      button { cursor: pointer; }
+      form { display: inline; }
     </style>
   </head>
   <body>
@@ -614,7 +640,38 @@ Create `app/views/layouts/application.html.erb` (it should already exist, update
 </html>
 ```
 
-## Step 7: Run All Tests
+---
+
+## Step 8: Configure Delete Buttons with Turbo Confirmation
+
+Now that Turbo is properly configured in Step 2, delete buttons work with confirmation:
+
+```erb
+<%= button_to "Delete", todo_path(todo), 
+    method: :delete, 
+    form: { data: { turbo_confirm: "Are you sure?" } },
+    class: "btn btn-danger" %>
+```
+
+**How it works:**
+
+1. `button_to` creates an invisible HTML form with `method="post"` and hidden `_method=delete`
+2. The `form: { data: { turbo_confirm: "..." } }` adds `data-turbo-confirm` to the form
+3. When you click Delete, Turbo intercepts the form submission
+4. Shows the browser confirmation dialog
+5. If confirmed, submits the DELETE request
+6. Controller destroys the record and redirects
+7. Page updates automatically with Turbo Drive
+
+**Why this syntax?**
+
+- `button_to` generates a `<form>` element
+- We need `data-turbo-confirm` on the form, not the button
+- That's why we pass it via `form: { data: { turbo_confirm: ... } }`
+
+---
+
+## Step 9: Run All Tests
 
 ```bash
 bundle exec rspec spec/requests/todos_spec.rb
@@ -628,9 +685,11 @@ Then run all tests:
 bundle exec rspec
 ```
 
-Expected: All tests passing (107 model tests + new request tests)
+Expected: All tests passing (107 model tests + request tests)
 
-## Step 8: Test Manually
+---
+
+## Step 10: Test Manually
 
 Start the Rails server:
 
@@ -643,189 +702,98 @@ Visit `http://localhost:3000` in your browser and:
 - ✅ Create a new todo
 - ✅ Edit a todo
 - ✅ Mark as complete
-- ✅ Delete a todo
+- ✅ Delete a todo (with confirmation dialog!) ✅
 
-## Important: Rails 7 Delete Links with Turbo
+---
+
+## Understanding Rails 7.1 Turbo Configuration
 
 **What is Turbo?**
 
-Rails 7 uses Turbo Drive (formerly Turbolinks) for faster page navigation. It intercepts link clicks and form submissions.
+Turbo Drive is Rails 7's replacement for Turbolinks. It intercepts link clicks and form submissions to enable faster page navigation without full page reloads.
 
-**Why `method: :delete` doesn't work**
+**Why do we need it for DELETE?**
 
-In Rails 7, old `method: :delete` with UJS (Unobtrusive JavaScript) no longer works. Instead, use:
+- HTTP only supports GET and POST natively in browsers
+- DELETE requests require JavaScript to work from a link or button
+- Turbo Drive handles converting `method: :delete` form submissions properly
+- It also handles `data-turbo-confirm` confirmations
 
-```erb
-<!-- ❌ OLD - Rails 6 and earlier (doesn't work in Rails 7) -->
-<%= link_to "Delete", todo_path(@todo), 
-    method: :delete, 
-    data: { confirm: "Are you sure?" } %>
+**Configuration summary:**
 
-<!-- ✅ NEW - Rails 7+ with Turbo -->
-<%= link_to "Delete", todo_path(@todo), 
-    data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
-```
+| File | Purpose | Content |
+|------|---------|---------|
+| `app/javascript/application.js` | Main JS entry point | `import "@hotwired/turbo-rails"` |
+| `config/importmap.rb` | Module mapping | Maps `@hotwired/turbo-rails` to CDN URL |
+| `app/views/layouts/application.html.erb` | Load JavaScript | `<%= javascript_importmap_tags %>` |
 
-**The differences:**
+**Common issues and solutions:**
 
-| Feature | Old (Rails 6) | New (Rails 7) |
-|---------|---------------|---------------|
-| HTTP method | `method: :delete` | `data: { turbo_method: :delete }` |
-| Confirmation | `data: { confirm: "..." }` | `data: { turbo_confirm: "..." }` |
-| Library | UJS (Unobtrusive JS) | Turbo Drive |
-| Still supported? | No (deprecated) | Yes ✅ |
+| Problem | Solution |
+|---------|----------|
+| Delete doesn't show confirmation | Turbo not loaded - check `importmap.rb` and `application.js` |
+| "Failed to resolve module specifier" error | Wrong module name - use only `@hotwired/turbo-rails`, not `stimulus-autoload` |
+| Delete works but doesn't redirect | Check that controller's `destroy` action calls `redirect_to` |
 
-**How it works:**
-
-1. User clicks delete link
-2. Turbo intercepts the click
-3. Shows confirmation dialog (if `turbo_confirm` present)
-4. Sends DELETE request to Rails
-5. Server destroys the record
-6. Redirects back to todos list
-7. Turbo updates the page without full reload
-
-**Debugging delete not working:**
+**Rails 7.1 Pattern for Delete Buttons:**
 
 ```erb
-<!-- Check that you have both data attributes -->
-data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }
-
-<!-- ❌ Incorrect -->
-method: :delete  <!-- This won't work in Rails 7 -->
-
-<!-- ✅ Correct -->
-data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }
-```
-
-**Debugging delete not working:**
-
-```erb
-<!-- Check that you have both data attributes -->
-data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }
-
-<!-- ❌ Incorrect -->
-method: :delete  <!-- This won't work in Rails 7 -->
-
-<!-- ✅ Correct for Turbo Stream responses -->
-data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }
-
-<!-- ✅ Correct for HTML redirects (RECOMMENDED) -->
-data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, format: :html
-```
-
-**The key issue:** In Rails 7, `data: { turbo_method: :delete }` generates a Turbo Stream request. If your destroy action has a `format.turbo_stream` block, the browser won't redirect but waits for the turbo_stream response. To force HTML response and proper redirect, specify `format: :html` in the link_to.
-
-**Solution - Use `button_to` instead of `link_to` for delete:**
-
-```erb
-<!-- ❌ OLD - link_to with delete doesn't work reliably -->
-<%= link_to "Delete", todo_path(todo), 
-    method: :delete, 
-    data: { confirm: "Are you sure?" } %>
-
-<!-- ✅ NEW - button_to works reliably in Rails 7 -->
-<%= button_to "Delete", todo_path(todo), 
-    method: :delete, 
-    data: { confirm: "Are you sure?" },
-    class: "btn btn-danger",
-    form: { style: "display: inline;" } %>
-```
-
-**Why `button_to` instead of `link_to`?**
-
-- `link_to` with `method: :delete` is a hack - it tries to use JavaScript to convert a GET request to DELETE
-- `button_to` creates a real HTML form with hidden fields
-- Forms with `method: :delete` are handled natively by Rails
-- More reliable and works even if JavaScript has issues
-- The `form: { style: "display: inline;" }` makes it look like a button
-
-**Why `button_to` instead of `link_to`?**
-
-- `link_to` with `method: :delete` is a hack - it tries to use JavaScript to convert a GET request to DELETE
-- `button_to` creates a real HTML form with hidden fields
-- Forms with `method: :delete` are handled natively by Rails
-- More reliable and works even if JavaScript has issues
-- The `form: { style: "display: inline;" }` makes it look like a button
-
-**Confirmation dialog:**
-
-Use `form: { data: { turbo_confirm: "message" } }` for proper Rails 7 confirmation:
-
-```erb
-<!-- ✅ CORRECT for Rails 7.1 with button_to -->
-<%= button_to "Delete", todo_path(todo), 
+<!-- Always use button_to for destructive actions -->
+<%= button_to "Delete", resource_path(resource), 
     method: :delete, 
     form: { data: { turbo_confirm: "Are you sure?" } },
     class: "btn btn-danger" %>
 ```
 
-**Why this syntax?**
+This is the standard Rails 7.1+ way to handle deletions.
 
-- `button_to` generates an HTML `<form>` element internally
-- In Rails 7, `data-turbo-confirm` is the attribute Turbo Drive listens for
-- We need to pass `data: { turbo_confirm: "..." }` to the **form**, not the button
-- That's why we use `form: { data: { turbo_confirm: ... } }`
+---
 
-**How it works step by step:**
+## Understanding Turbo Drive Behavior
 
-1. `button_to` creates an invisible form with `method="post"` and hidden `_method=delete` field
-2. The `form: { data: { turbo_confirm: "..." } }` adds `data-turbo-confirm` to the form
-3. When you click the button, it submits the form
-4. Turbo Drive intercepts the submission and shows the confirmation dialog
-5. If you click OK, the form is submitted with DELETE method
-6. Rails controller processes the DELETE request
-7. `destroy` action deletes the record and redirects
-8. Page updates with the deleted todo removed
+**Prefetching Links**
 
-**With `link_to` (alternative syntax, also works):**
+You may notice Turbo making background GET requests to pages with links (like `/todos/new`). This is **Turbo Prefetch**, a normal feature that improves performance:
 
-```erb
-<!-- ✅ Also works in Rails 7.1 -->
-<%= link_to "Delete", todo_path(todo), 
-    data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
+```
+Timeline:
+1. Page loads with link to /todos/new
+2. Turbo detects the link
+3. Makes a background GET request to prefetch /todos/new
+4. Caches the response
+5. When you click the link, page loads instantly from cache
 ```
 
-**Key difference:**
-- `link_to` with `data-turbo-method` = makes a DELETE request directly
-- `button_to` with method :delete = creates a form that submits DELETE
-- Both trigger `turbo_confirm` the same way
-- `button_to` is more semantically correct (delete is an action that should be a form submission)
+**Is this a problem?** No, it's a feature:
+- ✅ Makes the app feel faster
+- ✅ Only does GET requests (safe, no data changes)
+- ✅ Dramatically improves user experience
+- ✅ Works great for read-only pages
 
-**Note on JavaScript errors:**
+**Can I disable it?** Yes, if needed:
 
-You may still see `Failed to resolve module specifier "application"` in the console. This is a Turbo/Importmap configuration issue in your Rails setup but doesn't affect basic functionality. The `button_to` with `turbo_confirm` works independently of this error.
+```erb
+<!-- Disable prefetch for specific link -->
+<%= link_to "Link", path, data: { turbo_prefetch: false } %>
+```
 
-## Understanding Controller Patterns
+But don't disable it unless you have performance issues. For most Rails applications, prefetching is beneficial and expected behavior.
 
-**`before_action :set_todo`**
-- Runs before specific actions
-- Loads the todo and assigns to `@todo`
-- Dry: Don't repeat `@todo = Todo.find(params[:id])`
+**Turbo Drive lifecycle:**
 
-**`params.require(:todo).permit(:title, :completed)`**
-- Security: Only allows these parameters
-- Prevents mass assignment vulnerabilities
-- Called "Strong Parameters"
+- `turbo:load` - Page loaded
+- `turbo:before-cache` - Page about to be cached
+- `turbo:before-visit` - About to navigate
+- `turbo:visit` - Navigating
 
-**Flash messages**
-- `redirect_to @todo, notice: "..."`
-- Message persists across redirect
-- Shown on next page load
+These are useful for custom JavaScript if you need to react to page navigation. But for basic CRUD operations, you don't need to worry about them.
 
-**Error handling**
-- `.save` returns false on validation failure
-- Render same form with errors
-- User sees what went wrong
-
-**`rescue_from`**
-- Catches `RecordNotFound` exceptions
-- Returns 404 instead of crash
-- Professional error handling
+---
 
 ## 🎯 Completion Checklist
 
 - [ ] Generated controller with `rails generate`
+- [ ] Configured Turbo Rails (Step 2)
 - [ ] Set up routes in `config/routes.rb`
 - [ ] Created all request specs in `spec/requests/todos_spec.rb`
 - [ ] Implemented TodosController with all 7 actions
@@ -835,6 +803,7 @@ You may still see `Failed to resolve module specifier "application"` in the cons
 - [ ] Tested manually in browser
 - [ ] Verified error handling works
 - [ ] Verified flash messages work
+- [ ] Delete with confirmation working
 
 ## 📝 What You've Learned
 
@@ -849,7 +818,9 @@ You may still see `Failed to resolve module specifier "application"` in the cons
 - Form helpers with `form_with`
 - Link helpers and URL generation
 - Status codes and HTTP responses
-- HTML rendering in Rails
+- Turbo Drive configuration and usage
+- Delete buttons with confirmation
+- Turbo prefetching behavior
 
 ## 🔍 Key Controller Patterns Reference
 
