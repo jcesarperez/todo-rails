@@ -38,10 +38,11 @@ Complete step-by-step guide to building a TODO list application with Ruby on Rai
   - Toggle functionality
 
 ### Controllers & Views
-- **[Lesson 8: Views and Controllers](./08_views_and_controllers.md)** (coming soon)
-  - Create Rails controllers
-  - Build HTML views
-  - Test request specs
+- **[Lesson 8: Views and Controllers](./08_views_and_controllers.md)** ✅
+  - RESTful routing and 7 standard actions
+  - Request specs and HTTP testing
+  - Controllers, forms, and error handling
+  - HTML views and templating
 
 ## 🎯 Learning Path
 
