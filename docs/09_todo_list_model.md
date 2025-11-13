@@ -47,6 +47,8 @@ require 'rails_helper'
 
 RSpec.describe TodoList, type: :model do
   describe 'validations' do
+    subject { TodoList.new(title: "Test List") }
+    
     it { is_expected.to validate_presence_of(:title) }
     it { is_expected.to validate_uniqueness_of(:title) }
   end
@@ -304,19 +306,6 @@ end
 ### Step 2c: Run migrations
 
 ```bash
-rails db:migrate
-```
-
-**Troubleshooting:** If you get an error about "no such table", it means there's a leftover migration file with incorrect naming. Delete it and try again:
-
-```bash
-# List all migrations
-ls db/migrate/ | grep -i todolist
-
-# If you see any with 'todolist' (no underscore), delete them
-rm db/migrate/[TIMESTAMP]_add_todolist_to_todos.rb
-
-# Retry migration
 rails db:migrate
 ```
 
