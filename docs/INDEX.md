@@ -44,6 +44,18 @@ Complete step-by-step guide to building a TODO list application with Ruby on Rai
   - Controllers, forms, and error handling
   - HTML views and templating
 
+### TodoList Feature
+- **[Lesson 9: TodoList Model](./09_todolist_model.md)** ✅
+  - Create TodoList model
+  - One-to-many associations
+  - Database migrations with foreign keys
+  - Cascading deletes
+
+- **[Lesson 10: TodoList Views and Controllers](./10_todolist_views_controllers.md)** (coming soon)
+  - RESTful routing for TodoLists
+  - Nested routes for Todos within TodoLists
+  - Views for managing TodoLists and their Todos
+
 ## 🎯 Learning Path
 
 1. **Start here**: [Lesson 1: Environment Setup](./01_environment_setup.md)
@@ -122,8 +134,8 @@ Every lesson follows this cycle:
 ## 📊 Progress Overview
 
 ```
-✅ Complete: Lessons 1-7 (Model layer fully tested)
-🔄 In Progress: Lesson 8 (HTTP layer and views)
+✅ Complete: Lessons 1-8 (Full CRUD with HTTP layer)
+🔄 In Progress: None yet
 ⏭️ Coming Soon: Lesson 9+ (Advanced features)
 ```
 
@@ -135,11 +147,16 @@ After completing this tutorial, you'll have:
 - ✅ Complete CRUD operations (Create, Read, Update, Delete)
 - ✅ Semantic methods for domain logic (mark_complete, toggle_completion)
 - ✅ Database queries and filtering
-- ✅ HTTP endpoints and controllers
+- ✅ RESTful HTTP endpoints (7 actions)
 - ✅ HTML views with forms and displays
-- ✅ Comprehensive test suite (100+ tests)
+- ✅ Request specs testing all endpoints
+- ✅ Error handling and validation feedback
+- ✅ Flash messages and user feedback
+- ✅ Comprehensive test suite (100+ model + request tests)
 - ✅ Professional Rails application following best practices
 
 ---
 
 **Ready to start?** → Go to [Lesson 1: Environment Setup](./01_environment_setup.md)
+
+**Already started?** → Continue with your current lesson or go to [Lesson 8: Views and Controllers](./08_views_and_controllers.md) after Lesson 7
