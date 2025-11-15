@@ -75,7 +75,7 @@ RSpec.describe "TodoLists", type: :request do
 
     it "displays error messages on failure" do
       post todo_lists_path, params: {todo_list: {title: ""}}
-      expect(response.body).to include("Title can't be blank")
+      expect(response.body).to include("prohibited this todo list from being saved")
     end
   end
 

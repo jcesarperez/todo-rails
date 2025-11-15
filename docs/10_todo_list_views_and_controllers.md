@@ -4,6 +4,19 @@
 
 **What we'll build**: A RESTful TodoList controller with views, plus nested routes to manage Todos within TodoLists.
 
+## Prerequisites: Install Required Gems
+
+Before starting this lesson, install the gem required for request specs:
+
+```bash
+bundle add rails-controller-testing --group test
+bundle install
+```
+
+This gem provides the `render_template` matcher used in request specs to verify which view template was rendered.
+
+---
+
 ## Understanding Nested Routes
 
 We need to handle two types of routes:
@@ -31,8 +44,6 @@ DELETE /todo_lists/:todo_list_id/todos/:id       → destroy (delete todo)
 ```
 
 **Note:** Standalone Todos (without a list) are still accessible at `/todos` routes from Lesson 8.
-
----
 
 ## Step 1: Set Up Nested Routes
 
@@ -148,7 +159,7 @@ RSpec.describe "TodoLists", type: :request do
 
     it "displays error messages on failure" do
       post todo_lists_path, params: { todo_list: { title: "" } }
-      expect(response.body).to include("Title can't be blank")
+      expect(response.body).to include("prohibited this todo list from being saved")
     end
   end
 
@@ -285,6 +296,16 @@ You should see many failures. ✓ This is the **Red** phase.
 ```bash
 rails generate controller TodoLists index show new edit --skip-test
 ```
+
+**Important:** This will generate some routes. Go back to `config/routes.rb` and delete any lines like:
+```ruby
+get 'todo_lists/index'
+get 'todo_lists/show'
+get 'todo_lists/new'
+get 'todo_lists/edit'
+```
+
+Keep only the `resources :todo_lists` block that you created in Step 1.
 
 This creates:
 - `app/controllers/todo_lists_controller.rb`

@@ -31,3 +31,5 @@ end
 gem "annotate", "~> 3.2", group: :development
 
 gem "test", "~> 1.0", group: :development
+
+gem "rails-controller-testing", "~> 1.0", group: :test
