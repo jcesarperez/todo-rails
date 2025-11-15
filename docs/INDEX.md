@@ -51,10 +51,11 @@ Complete step-by-step guide to building a TODO list application with Ruby on Rai
   - Database migrations with foreign keys
   - Cascading deletes
 
-- **[Lesson 10: TodoList Views and Controllers](./10_todolist_views_controllers.md)** (coming soon)
+- **[Lesson 10: TodoList Views and Controllers](./10_todolist_views_controllers.md)** ✅
   - RESTful routing for TodoLists
   - Nested routes for Todos within TodoLists
   - Views for managing TodoLists and their Todos
+  - Cascading deletes in action
 
 ## 🎯 Learning Path
 
@@ -128,8 +129,10 @@ Every lesson follows this cycle:
 | 6. Delete | 15-20 min | Beginner |
 | 7. Completed | 15-20 min | Beginner |
 | 8. Views | 30-40 min | Intermediate |
+| 9. TodoList Model | 25-30 min | Beginner |
+| 10. TodoList Views | 30-40 min | Intermediate |
 
-**Total**: ~4.5-5.5 hours for complete tutorial
+**Total**: ~6-7 hours for complete tutorial (including Lesson 9-10)
 
 ## 📊 Progress Overview
 

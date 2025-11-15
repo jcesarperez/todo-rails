@@ -1,0 +1,40 @@
+<div class="container">
+  <h1>Todo Lists</h1>
+
+  <div class="todo-lists">
+    <% if @todo_lists.any? %>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Todos</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @todo_lists.each do |list| %>
+            <tr>
+              <td><%= link_to list.title, todo_list_path(list) %></td>
+              <td>
+                <span class="badge"><%= list.todos.count %></span>
+              </td>
+              <td>
+                <%= link_to "View", todo_list_path(list), class: "btn btn-sm btn-primary" %>
+                <%= link_to "Edit", edit_todo_list_path(list), class: "btn btn-sm btn-warning" %>
+                <%= button_to "Delete", todo_list_path(list), 
+                    method: :delete, 
+                    form: { data: { turbo_confirm: "Are you sure?" } },
+                    class: "btn btn-sm btn-danger" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p>No todo lists yet. <%= link_to "Create one!", new_todo_list_path %></p>
+    <% end %>
+  </div>
+
+  <%= link_to "New Todo List", new_todo_list_path, class: "btn btn-primary" %>
+  <%= link_to "Back to Todos", todos_path, class: "btn btn-secondary" %>
+</div>

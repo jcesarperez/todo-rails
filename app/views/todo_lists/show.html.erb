@@ -1,0 +1,65 @@
+<div class="container">
+  <h1><%= @todo_list.title %></h1>
+
+  <div class="list-stats">
+    <p>
+      <strong>Total Todos:</strong>
+      <%= @todo_list.todos.count %>
+    </p>
+    <p>
+      <strong>Completed:</strong>
+      <%= @todo_list.todos.where(completed: true).count %>
+    </p>
+    <p>
+      <strong>Incomplete:</strong>
+      <%= @todo_list.todos.where(completed: false).count %>
+    </p>
+  </div>
+
+  <div class="todos-in-list">
+    <h2>Todos</h2>
+    <% if @todo_list.todos.any? %>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @todo_list.todos.each do |todo| %>
+            <tr>
+              <td><%= todo.title %></td>
+              <td>
+                <% if todo.completed? %>
+                  <span class="badge completed">✓ Completed</span>
+                <% else %>
+                  <span class="badge incomplete">○ Incomplete</span>
+                <% end %>
+              </td>
+              <td>
+                <%= link_to "Edit", edit_todo_path(todo), class: "btn btn-sm btn-primary" %>
+                <%= button_to "Delete", todo_path(todo), 
+                    method: :delete, 
+                    form: { data: { turbo_confirm: "Are you sure?" } },
+                    class: "btn btn-sm btn-danger" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p>No todos in this list yet.</p>
+    <% end %>
+  </div>
+
+  <div class="actions">
+    <%= link_to "Edit", edit_todo_list_path(@todo_list), class: "btn btn-primary" %>
+    <%= button_to "Delete", todo_list_path(@todo_list), 
+        method: :delete, 
+        form: { data: { turbo_confirm: "Are you sure?" } },
+        class: "btn btn-danger" %>
+    <%= link_to "Back to Lists", todo_lists_path, class: "btn btn-secondary" %>
+  </div>
+</div>
