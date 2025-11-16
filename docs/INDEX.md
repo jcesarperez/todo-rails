@@ -57,6 +57,12 @@ Complete step-by-step guide to building a TODO list application with Ruby on Rai
   - Views for managing TodoLists and their Todos
   - Cascading deletes in action
 
+- **[Lesson 11: Nested Todos - Views and Controllers](./11_nested_todos.md)** ✅
+  - Nested TodosController implementation
+  - Create, view, delete todos in a list
+  - Root route changed to TodoLists
+  - Parent-child relationships
+
 ## 🎯 Learning Path
 
 1. **Start here**: [Lesson 1: Environment Setup](./01_environment_setup.md)
