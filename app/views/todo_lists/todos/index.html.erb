@@ -1,24 +1,8 @@
 <div class="container">
-  <h1><%= @todo_list.title %></h1>
-
-  <div class="list-stats">
-    <p>
-      <strong>Total Todos:</strong>
-      <%= @todo_list.todos.count %>
-    </p>
-    <p>
-      <strong>Completed:</strong>
-      <%= @todo_list.todos.where(completed: true).count %>
-    </p>
-    <p>
-      <strong>Incomplete:</strong>
-      <%= @todo_list.todos.where(completed: false).count %>
-    </p>
-  </div>
+  <h1>Todos in <%= @todo_list.title %></h1>
 
   <div class="todos-in-list">
-    <h2>Todos</h2>
-    <% if @todo_list.todos.any? %>
+    <% if @todos.any? %>
       <table class="table">
         <thead>
           <tr>
@@ -28,7 +12,7 @@
           </tr>
         </thead>
         <tbody>
-          <% @todo_list.todos.each do |todo| %>
+          <% @todos.each do |todo| %>
             <tr>
               <td><%= link_to todo.title, todo_list_todo_path(@todo_list, todo) %></td>
               <td>
@@ -39,7 +23,6 @@
                 <% end %>
               </td>
               <td>
-                <%= link_to "View", todo_list_todo_path(@todo_list, todo), class: "btn btn-sm btn-primary" %>
                 <%= button_to "Delete", todo_list_todo_path(@todo_list, todo), 
                     method: :delete, 
                     form: { data: { turbo_confirm: "Are you sure?" } },
@@ -54,13 +37,6 @@
     <% end %>
   </div>
 
-  <div class="actions">
-    <%= link_to "New Todo", new_todo_list_todo_path(@todo_list), class: "btn btn-primary" %>
-    <%= link_to "Edit", edit_todo_list_path(@todo_list), class: "btn btn-warning" %>
-    <%= button_to "Delete", todo_list_path(@todo_list), 
-        method: :delete, 
-        form: { data: { turbo_confirm: "Are you sure?" } },
-        class: "btn btn-danger" %>
-    <%= link_to "Back to Lists", todo_lists_path, class: "btn btn-secondary" %>
-  </div>
+  <%= link_to "New Todo", new_todo_list_todo_path(@todo_list), class: "btn btn-primary" %>
+  <%= link_to "Back to List", todo_list_path(@todo_list), class: "btn btn-secondary" %>
 </div>

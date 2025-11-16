@@ -1,0 +1,37 @@
+<div class="container">
+  <h1><%= @todo.title %></h1>
+
+  <div class="todo-details">
+    <p>
+      <strong>List:</strong>
+      <%= link_to @todo_list.title, todo_list_path(@todo_list) %>
+    </p>
+
+    <p>
+      <strong>Status:</strong>
+      <% if @todo.completed? %>
+        <span class="badge completed">✓ Completed</span>
+      <% else %>
+        <span class="badge incomplete">○ Incomplete</span>
+      <% end %>
+    </p>
+
+    <p>
+      <strong>Created:</strong>
+      <%= @todo.created_at.strftime("%B %d, %Y at %I:%M %p") %>
+    </p>
+
+    <p>
+      <strong>Last updated:</strong>
+      <%= @todo.updated_at.strftime("%B %d, %Y at %I:%M %p") %>
+    </p>
+  </div>
+
+  <div class="actions">
+    <%= button_to "Delete", todo_list_todo_path(@todo_list, @todo), 
+        method: :delete, 
+        form: { data: { turbo_confirm: "Are you sure?" } },
+        class: "btn btn-danger" %>
+    <%= link_to "Back to List", todo_list_path(@todo_list), class: "btn btn-secondary" %>
+  </div>
+</div>

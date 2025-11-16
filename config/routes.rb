@@ -5,5 +5,5 @@ Rails.application.routes.draw do
     resources :todos, module: :todo_lists
   end
 
-  root "todos#index"
+  root "todo_lists#index"
 end

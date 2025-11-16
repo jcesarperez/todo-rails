@@ -503,11 +503,51 @@ Then run all request tests:
 bundle exec rspec spec/requests/
 ```
 
-All should pass! ✅
+Not all should pass!
 
 ---
 
-## Step 6: Test Manually
+## Step 6: Update Root Path Test
+
+The root path now points to TodoLists instead of Todos. Update the test in `spec/requests/todos_spec.rb`:
+
+Change this:
+```ruby
+describe "root path" do
+  it "redirects to todos index" do
+    get root_path
+    expect(response).to redirect_to(todos_path)
+  end
+end
+```
+
+To this:
+```ruby
+describe "root path" do
+  it "displays todo lists on root path" do
+    get root_path
+    expect(response).to have_http_status(:ok)
+    expect(response.body).to include("Todo Lists")
+  end
+end
+```
+
+**What changed:**
+- Root path now displays TodoLists index
+- Test verifies the response is successful (200 status)
+- Test verifies "Todo Lists" heading is present on the page
+
+Run all tests:
+
+```bash
+bundle exec rspec spec/requests/
+```
+
+All tests should pass! ✅
+
+---
+
+## Step 7: Test manually
 
 Start the Rails server:
 
