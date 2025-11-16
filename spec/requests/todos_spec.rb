@@ -212,7 +212,7 @@ RSpec.describe "Todos", type: :request do
     it "displays todos list on root path" do
       get root_path
       expect(response).to have_http_status(:ok)
-      expect(response.body).to include("<h1>Todos</h1>")
+      expect(response.body).to include("Todo Lists")
     end
   end
 end
